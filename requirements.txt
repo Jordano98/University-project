@@ -1,2 +1,5 @@
 django>3.2,<3.3
 pillow
+djangorestframework
+markdown       # Markdown support for the browsable API.
+django-filter  # Filtering support

@@ -4,9 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5854e4aa93.js" crossorigin="anonymous"></script>
     <title>University List</title>
 </head>
 <body>
+    <div>
+        <span>Filter_by:</span>
+        <form method="get">
+            {{ filter.form.as_p }}
+            <input type="submit" />
+        </form>
+    </div>
+
+    <div>
+        <form action="{% url 'university:search' %}" method="get">
+            <input placeholder="Search here:" name="s"  type="text" onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Search here:'">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    {% for uni in unis %}
+    <div>
+        <a href="{% url 'university:uni-detail' pk=uni.id %}"><h2>{{uni.id}}-{{uni.name}}</h2></a>
+        <p>Town: {{uni.city}}</p>
+        <p>Country: {{uni.city.country}}</p>
+        <p>Rate: {{uni.admission_rate}}</p>
+    </div><hr>
+    {% endfor %}
+    <br>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
     
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 </html>
